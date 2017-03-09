@@ -1,1 +1,3 @@
-# interaction-design-project
+# Interaction Design Project
+
+~For our tardigrade locator!! :P~

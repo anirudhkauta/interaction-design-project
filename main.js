@@ -10,7 +10,7 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up main.js to start working on your app!</Text>
+        <Text>This is where stuff comes up</Text>
       </View>
     );
   }
@@ -19,10 +19,13 @@ class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  font: {
+    color: '#000',
+  }
 });
 
 Expo.registerRootComponent(App);

@@ -8,8 +8,10 @@
   "dependencies": {
     "@expo/ex-navigation": "^2.9.2",
     "@expo/vector-icons": "~4.0.0",
-    "expo": "^14.0.2",
-    "react": "~15.4.0",
-    "react-native": "https://github.com/exponent/react-native/archive/sdk-14.0.0.tar.gz"
+    "@shoutem/ui": "^0.12.0",
+    "expo": "~15.0.0",
+    "native-base": "^2.0.13",
+    "react": "~15.4.2",
+    "react-native": "github:exponent/react-native#sdk-15.0.0"
   }
 }

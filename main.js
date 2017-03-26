@@ -14,10 +14,16 @@ import {
 import {
   FontAwesome,
 } from '@expo/vector-icons';
+// import {
+//   View,
+//   Platform
+// } from '@shoutem/ui';
 
 import NotificationSetup from './components/NotificationSetup';
 import Router from './navigation/Router';
 import cacheAssetsAsync from './util/cacheAssetsAsync';
+
+import HomeScreen from './screens/HomeScreen';
 
 class AppContainer extends React.Component {
   state = {
@@ -48,6 +54,16 @@ class AppContainer extends React.Component {
 
   render() {
     if (this.state.appIsReady) {
+      // return (
+      //   <Container>
+      //     <Header>
+      //       <Title>hi</Title>
+      //     </Header>
+      //     <Content>
+      //       <Text>hi</Text>
+      //     </Content>
+      //   </Container>
+      // );
       return (
         <View style={styles.container}>
           <NavigationProvider router={Router}>

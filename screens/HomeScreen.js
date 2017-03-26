@@ -1,83 +1,70 @@
 import React from 'react';
+// import Dimensions from 'Dimensions';
+// import {
+//   // Image,
+//   Linking,
+//   Platform,
+//   // ScrollView,
+//   StyleSheet,
+//   // Text,
+//   TouchableOpacity,
+//   // View,
+// } from 'react-native';
 import {
   Image,
-  Linking,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+  Dimensions,
+} from 'react-native'
 import {
   FontAwesome,
 } from '@expo/vector-icons';
+// import {
+//   Icon,
+//   Row,
+//   Subtitle,
+//   Text,
+//   Title,
+//   View,
+//   Image,
+//   Divider,
+//   Overlay,
+//   Tile,
+//   NavigationBar,
+// } from '@shoutem/ui';
+import { Container, Header, Title, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Row, Switch, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
 
 export default class HomeScreen extends React.Component {
   render() {
+    var {height, width} = Dimensions.get('window');
+
     return (
-      <View style={styles.container}>
-        <ScrollView>
-          <View style={{flexDirection:'row'}}>
-            <Image
-              source={require('../assets/images/TU-wordmark.png')}
-              style={{flexShrink:1,resizeMode:"contain",height:120}}
-            />
-          </View>
-          {this._renderButton('Maps', 'map', 'map')}
-          {this._renderButton('Events', 'calendar', 'events')}
-          {this._renderButton('Places', 'building', 'places')}
-          {this._renderButton('Classes', 'graduation-cap', 'classes')}
-          {this._renderButton('Friends', 'users', 'friends')}
-        </ScrollView>
-      </View>
+      <Container>
+        <Content style={{marginTop:20}}>
+          <Image style={{width: width-10, height: 110}} source={require('../assets/images/TU-wordmark.png')} />
+          {this._renderRow('Maps', 'map', '#FF9501', 'map')}
+          {this._renderRow('Events', 'calendar', '#FF9501', 'events')}
+          {this._renderRow('Places', 'building', '#FF9501', 'places')}
+          {this._renderRow('Classes', 'graduation-cap', '#FF9501', 'classes')}
+          {this._renderRow('Friends', 'users', '#FF9501', 'friends')}
+      </Content>
+    </Container>
     )
   }
 
-  _renderButton(name, iconName, screenName) {
+  _renderRow(name, iconName, bgColor, link) {
     return (
-      <TouchableOpacity style={styles.button}>
-        <View style={styles.buttonImageTextGroup}>
-          {this._renderIcon(iconName, 32)}
-          <Text style={styles.buttonText}>{name}</Text>
-        </View>
-        {this._renderIcon('chevron-right', 16)}
-      </TouchableOpacity>
+      <ListItem icon onPress={() => this.props.navigator.push(link)}>
+        <Left>
+          <Button style={{ backgroundColor: bgColor }}>
+            <Icon name={iconName} />
+          </Button>
+        </Left>
+        <Body>
+          <Text>{name}</Text>
+        </Body>
+        <Right>
+          <Icon name="arrow-forward" />
+        </Right>
+      </ListItem>
     )
-  }
-
-  _renderIcon(name, size) {
-    return (
-      <FontAwesome
-        name={name}
-        size={size}
-        style={{width: size+10}}
-      />
-    );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    flex: 1,
-    flexDirection:'column',
-    backgroundColor: '#fff',
-  },
-  button: {
-    flex: 0,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-  },
-  buttonImageTextGroup: {
-    flex: 0,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    paddingLeft: 10,
-  },
-  buttonText: {
-    marginLeft: 20,
-    fontSize: 20,
-  },
-});

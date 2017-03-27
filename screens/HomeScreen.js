@@ -42,9 +42,9 @@ export default class HomeScreen extends React.Component {
           <Image style={{width: width-10, height: 110}} source={require('../assets/images/TU-wordmark.png')} />
           {this._renderRow('Maps', 'map', '#FF9501', 'map')}
           {this._renderRow('Events', 'calendar', '#FF9501', 'events')}
-          {this._renderRow('Places', 'building', '#FF9501', 'places')}
+          {this._renderRow('Campus Locations', 'building', '#FF9501', 'places')}
           {this._renderRow('Classes', 'graduation-cap', '#FF9501', 'classes')}
-          {this._renderRow('Friends', 'users', '#FF9501', 'friends')}
+          {this._renderRow('Friends', 'people', '#FF9501', 'friends')}
       </Content>
     </Container>
     )

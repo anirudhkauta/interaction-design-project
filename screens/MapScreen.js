@@ -13,8 +13,8 @@ export default class MapScreen extends React.Component {
       <Container>
         <Header searchBar rounded>
           <Left style={{flex:0}}>
-            <Button transparent>
-              <Icon name='arrow-back' onPress={() => this.props.navigator.pop()} />
+            <Button transparent onPress={() => this.props.navigator.pop()}>
+              <Icon name='arrow-back' />
             </Button>
           </Left>
           <Item>

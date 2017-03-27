@@ -40,7 +40,7 @@ export default class HomeScreen extends React.Component {
       <Container>
         <Content style={{marginTop:20}}>
           <Image style={{width: width-10, height: 110}} source={require('../assets/images/TU-wordmark.png')} />
-          {this._renderRow('Maps', 'map', '#FF9501', 'map')}
+          {this._renderRow('Maps', 'compass', '#FF9501', 'map')}
           {this._renderRow('Events', 'calendar', '#FF9501', 'events')}
           {this._renderRow('Campus Locations', 'building', '#FF9501', 'places')}
           {this._renderRow('Classes', 'graduation-cap', '#FF9501', 'classes')}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   Image,
 } from 'react-native'
@@ -7,37 +7,34 @@ import {
 } from '@expo/vector-icons';
 import { Container, Header, Title, Tabs, Tab, Separator, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, Input, Row, Switch, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
 
-export default class MapScreen extends React.Component {
+class ClassScreen extends React.Component {
   render() {
     return (
       <Container>
         <Header hasTabs>
-          <Left>
+          <Left style={{flex:0}}>
             <Button transparent onPress={() => this.props.navigator.pop()}>
               <Icon name='arrow-back' />
             </Button>
           </Left>
           <Body>
-            <Title>Events</Title>
+            <Title>{this.props.className}</Title>
           </Body>
-          <Right>
+          <Right style={{flex:0}}>
             <Button transparent>
-              <Icon name='search' />
-            </Button>
-            <Button transparent onPress={() => this.props.navigator.push('newEvent')}>
-              <Icon name='add' />
+              <Icon name='menu' />
             </Button>
           </Right>
         </Header>
 
         <Tabs>
-          <Tab heading="My Events">
+          <Tab heading="Description">
             {this._renderTab()}
           </Tab>
-          <Tab heading="Subscriptions">
+          <Tab heading="Tutors">
             {this._renderTab()}
           </Tab>
-          <Tab heading="Calendar">
+          <Tab heading="Reviews">
             {this._renderTab()}
           </Tab>
         </Tabs>
@@ -53,17 +50,17 @@ export default class MapScreen extends React.Component {
     return (
       <Container>
         <Content>
-          <Separator bordered>
-            <Text>Today</Text>
-          </Separator>
-          {this._renderEvent("beer pong", "4:20 pm")}
-          {this._renderEvent("data structs project", "12:00 am")}
+          <Text>Class time: 3:30 PM - 4:45 PM</Text>
+          <Text>Tuesdays/Thursdays</Text>
 
-          <Separator bordered>
-            <Text>Tomorrow</Text>
-          </Separator>
-          {this._renderEvent("RUF", "6:00 pm")}
-          {this._renderEvent("sleep", "null")}
+          <Text>Location: Keplinger Hall Room M3</Text>
+
+          <Text>Instructor: S. Kuttal</Text>
+          <Text>Email: email@utulsa.edu</Text>
+          <Text>Phone: 555-555-5555</Text>
+
+          <Text>Description:</Text>
+          <Text>This class teaches students the fundamentals of interaction design.</Text>
         </Content>
       </Container>
     )
@@ -83,3 +80,9 @@ export default class MapScreen extends React.Component {
     )
   }
 }
+
+ClassScreen.propTypes = {
+  className: PropTypes.string.isRequired,
+}
+
+export default ClassScreen

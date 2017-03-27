@@ -54,16 +54,6 @@ class AppContainer extends React.Component {
 
   render() {
     if (this.state.appIsReady) {
-      // return (
-      //   <Container>
-      //     <Header>
-      //       <Title>hi</Title>
-      //     </Header>
-      //     <Content>
-      //       <Text>hi</Text>
-      //     </Content>
-      //   </Container>
-      // );
       return (
         <View style={styles.container}>
           <NavigationProvider router={Router}>

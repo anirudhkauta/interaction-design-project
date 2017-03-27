@@ -11,75 +11,57 @@ export default class MapScreen extends React.Component {
   render() {
     return (
       <Container>
-        <Header hasTabs>
+        <Header>
           <Left>
             <Button transparent onPress={() => this.props.navigator.pop()}>
               <Icon name='arrow-back' />
             </Button>
           </Left>
           <Body>
-            <Title>Events</Title>
+            <Title>Classes</Title>
           </Body>
           <Right>
             <Button transparent>
               <Icon name='search' />
             </Button>
-            <Button transparent onPress={() => this.props.navigator.push('newEvent')}>
-              <Icon name='add' />
+            <Button transparent>
+              <Icon name='menu' />
             </Button>
           </Right>
         </Header>
 
-        <Tabs>
-          <Tab heading="My Events">
-            {this._renderTab()}
-          </Tab>
-          <Tab heading="Subscriptions">
-            {this._renderTab()}
-          </Tab>
-          <Tab heading="Calendar">
-            {this._renderTab()}
-          </Tab>
-        </Tabs>
-      </Container>
-    )
-
-  }
-  // <Button>
-  //   <Text>Create Event</Text>
-  // </Button>
-
-  _renderTab(tabName) {
-    return (
-      <Container>
         <Content>
           <Separator bordered>
-            <Text>Today</Text>
+            <Text>Current Semester</Text>
           </Separator>
-          {this._renderEvent("beer pong", "4:20 pm")}
-          {this._renderEvent("data structs project", "12:00 am")}
+          {this._renderClass("data structures")}
+          {this._renderClass("interaction design")}
 
           <Separator bordered>
-            <Text>Tomorrow</Text>
+            <Text>Fall 2016</Text>
           </Separator>
-          {this._renderEvent("RUF", "6:00 pm")}
-          {this._renderEvent("sleep", "null")}
+          {this._renderClass("algorithms")}
+          {this._renderClass("physics")}
+          {this._renderClass("a really really really long class name")}
         </Content>
       </Container>
     )
   }
 
-  _renderEvent(name, date, isLast) {
+  _renderClass(name) {
     return (
-      <ListItem icon last>
+      <ListItem icon last onPress={() => this._gotoClassScreen(name)}>
         <Body>
           <Text>{name}</Text>
         </Body>
         <Right>
-            <Text>{date}</Text>
             <Icon name="arrow-forward" />
         </Right>
       </ListItem>
     )
+  }
+
+  _gotoClassScreen(name) {
+    this.props.navigator.push("classScreen", {className: name});
   }
 }

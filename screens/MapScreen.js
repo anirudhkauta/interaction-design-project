@@ -1,11 +1,14 @@
 import React from 'react';
 import {
   Image,
+  Platform,
 } from 'react-native'
 import {
   FontAwesome,
 } from '@expo/vector-icons';
 import { Container, Header, Title, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, Input, Row, Switch, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
+
+import Map from '../components/Map'
 
 export default class MapScreen extends React.Component {
   render() {
@@ -27,6 +30,17 @@ export default class MapScreen extends React.Component {
             </Button>
           </Right>
         </Header>
+
+        <Button rounded
+            style={{position: 'absolute', left:20,bottom: (Platform.OS === 'ios') ? 20 : 40,padding:15,margin:0,width:45,height:45,zIndex:400,justifyContent: 'center'}}
+            onPress={() => this.props.navigator.push('newEvent')}
+          >
+          <Icon name="add" style={{margin: 0}} />
+        </Button>
+
+        <Content>
+          <Map />
+        </Content>
       </Container>
     )
   }

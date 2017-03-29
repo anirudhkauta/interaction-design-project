@@ -5,7 +5,9 @@ import {
 import {
   FontAwesome,
 } from '@expo/vector-icons';
-import { Container, Header, Form, Title, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, Input, Row, Switch, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
+import { Container, Header, Form, Title, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, Input, Row, Switch, Separator, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
+
+import LocationInput from '../../components/input/LocationInput'
 
 export default class NewEventScreen extends React.Component {
   render() {
@@ -32,11 +34,15 @@ export default class NewEventScreen extends React.Component {
             <Item>
               <Input placeholder="Title" />
             </Item>
-            <Item>
-              <Input placeholder="Location" />
+            <Item last>
+              <Icon name="compass" />
+              <LocationInput navigator={this.props.navigator} placeholder="Location" />
             </Item>
-            <Item>
+            <Separator bordered />
+            <Item last>
+              <Icon name="calendar" />
               <Input placeholder="Starts" />
+              <Icon name="calendar" />
               <Input placeholder="Ends" />
             </Item>
           </Form>

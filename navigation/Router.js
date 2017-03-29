@@ -12,6 +12,9 @@ import NewEventScreen from '../screens/events/NewEventScreen'
 //Classes
 import ClassScreen from '../screens/classes/ClassScreen';
 
+//components
+import LocationInput from '../components/input/LocationInput'
+
 export default createRouter(() => ({
   home: () => HomeScreen,
   map: () => MapScreen,
@@ -24,4 +27,7 @@ export default createRouter(() => ({
 
   //Classes
   classScreen: () => ClassScreen,
+
+  //components
+  LocationInput: () => LocationInput,
 }));

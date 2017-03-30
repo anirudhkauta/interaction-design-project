@@ -1,88 +1,29 @@
-import Exponent from 'expo';
-import React from 'react';
-import {
-  AppRegistry,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
-import {
-  NavigationProvider,
-  StackNavigation,
-} from '@expo/ex-navigation';
-import {
-  FontAwesome,
-} from '@expo/vector-icons';
-// import {
-//   View,
-//   Platform
-// } from '@shoutem/ui';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import App from './App';
+import configureStore from './api/configureStore';
 
-import NotificationSetup from './components/NotificationSetup';
-import Router from './navigation/Router';
-import cacheAssetsAsync from './util/cacheAssetsAsync';
+function setup() {
+  class Root extends Component {
 
-import HomeScreen from './screens/HomeScreen';
+    constructor() {
+      super();
+      this.state = {
+        isLoading: false,
+        store: configureStore(() => this.setState({ isLoading: false })),
+      };
+    }
 
-class AppContainer extends React.Component {
-  state = {
-    appIsReady: false,
-  }
-
-  componentWillMount() {
-    this._loadAssetsAsync();
-  }
-
-  async _loadAssetsAsync() {
-    try {
-      await cacheAssetsAsync({
-        images: [
-          require('./assets/images/TU-wordmark.png'),
-        ],
-      });
-    } catch(e) {
-      console.warn(
-        'There was an error caching assets (see: main.js), perhaps due to a ' +
-        'network timeout, so we skipped caching. Reload the app to try again.'
+    render() {
+      return (
+        <Provider store={this.state.store}>
+          <App />
+        </Provider>
       );
-      console.log(e.message);
-    } finally {
-      this.setState({appIsReady: true});
     }
   }
 
-  render() {
-    if (this.state.appIsReady) {
-      return (
-        <View style={styles.container}>
-          <NavigationProvider router={Router}>
-            <StackNavigation id="root" initialRoute={Router.getRoute('home')} />
-          </NavigationProvider>
-
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-
-          <NotificationSetup />
-        </View>
-      );
-    } else {
-      return (
-        <Exponent.Components.AppLoading />
-      );
-    }
-  }
+  return Root;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  statusBarUnderlay: {
-    height: 24,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-  },
-});
-
-Exponent.registerRootComponent(AppContainer);
+export default setup;

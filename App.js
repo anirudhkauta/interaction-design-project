@@ -85,4 +85,5 @@ const styles = StyleSheet.create({
   },
 });
 
-Exponent.registerRootComponent(AppContainer);
+export default AppContainer
+// Exponent.registerRootComponent(AppContainer);

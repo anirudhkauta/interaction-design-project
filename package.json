@@ -10,11 +10,13 @@
     "@expo/vector-icons": "~4.0.0",
     "@shoutem/ui": "^0.12.0",
     "expo": "~15.0.0",
+    "immutability-helper": "^2.1.2",
     "native-base": "^2.0.13",
     "react": "~15.4.2",
     "react-native": "github:exponent/react-native#sdk-15.0.0",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
+    "redux-actions": "^2.0.1",
     "redux-thunk": "^2.2.0"
   }
 }

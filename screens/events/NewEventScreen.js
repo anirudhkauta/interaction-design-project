@@ -5,9 +5,10 @@ import {
 } from 'react-native'
 import { Container, Header, Form, Title, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, Input, Row, Switch, Separator, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
 
-import LocationInput from '../../components/input/LocationInput'
+import LocationInput from '../../components/input/LocationInput';
+import DateTimeInputItem from '../../components/input/DateTimeInputItem';
 
-import eventActions from '../../actions/events'
+import eventActions from '../../actions/events';
 
 class NewEventScreen extends React.Component {
   constructor(props) {
@@ -49,42 +50,19 @@ class NewEventScreen extends React.Component {
               <LocationInput navigator={this.props.navigator} placeholder="Location" onChangeText={(text) => this.setState({location: text})} />
             </Item>
             <Separator bordered />
-            <Item last>
+            <DateTimeInputItem onDatetimeChange={(text) => this.setState({startTime: text})}>
               <Icon name="calendar" />
-              <Input placeholder="Starts" onChangeText={(text) => this.setState({startTime: text})} />
+              <Input placeholder="Starts" />
+            </DateTimeInputItem>
+            <DateTimeInputItem onDatetimeChange={(text) => this.setState({endTime: text})}>
               <Icon name="calendar" />
-              <Input placeholder="Ends" onChangeText={(text) => this.setState({endTime: text})} />
-            </Item>
+              <Input placeholder="Ends" />
+            </DateTimeInputItem>
           </Form>
         </Content>
       </Container>
     )
   }
-
-  // <DatePicker
-  //     style={{width: 200}}
-  //     date={this.state.date}
-  //     mode="date"
-  //     placeholder="select date"
-  //     format="YYYY-MM-DD"
-  //     minDate="2016-05-01"
-  //     maxDate="2016-06-01"
-  //     confirmBtnText="Confirm"
-  //     cancelBtnText="Cancel"
-  //     customStyles={{
-  //       dateIcon: {
-  //         position: 'absolute',
-  //         left: 0,
-  //         top: 4,
-  //         marginLeft: 0
-  //       },
-  //       dateInput: {
-  //         marginLeft: 36
-  //       }
-  //       // ... You can check the source to find the other keys.
-  //     }}
-  //     onDateChange={(date) => {this.setState({date: date})}}
-  //   />
 }
 
 NewEventScreen.propTypes = {

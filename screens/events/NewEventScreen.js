@@ -15,7 +15,7 @@ class NewEventScreen extends React.Component {
     super(props)
 
     let initialStartTime = new Date();
-    initialStartTime.setHours(Math.ceil(initialStartTime.getHours()),0,0,0);
+    initialStartTime.setHours(Math.ceil(initialStartTime.getHours()+initialStartTime.getMinutes()/60),0,0,0);
     this.state = {
       title: "",
       location: "",

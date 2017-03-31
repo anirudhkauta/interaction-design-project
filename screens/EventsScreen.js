@@ -35,20 +35,55 @@ class EventsScreen extends React.Component {
 
         <Tabs>
           <Tab heading="My Events">
-            {this._renderTab()}
+            {this._renderEventsTab()}
           </Tab>
-          <Tab heading="Subscriptions">
-            {this._renderTab()}
+          <Tab heading="Groups">
+            {this._renderGroupsTab()}
           </Tab>
           <Tab heading="Calendar">
-            {this._renderTab()}
+            {this._renderCalenderTab()}
           </Tab>
         </Tabs>
       </Container>
     )
   }
 
-  _renderTab(tabName) {
+  _renderEventsTab(tabName) {
+    return (
+      <Container>
+        <Content>
+        </Content>
+        <Button full onPress={() => this.props.navigator.push('newEvent')}>
+          <Text>Create Event</Text>
+        </Button>
+      </Container>
+    )
+  }// style={{alignSelf:'flex-end'}}>
+
+  _renderGroupsTab(tabName) {
+    return (
+      <Container>
+        <Content>
+          <Separator bordered>
+            <Text>Event manager</Text>
+          </Separator>
+
+          <Separator bordered>
+            <Text>Subscribed</Text>
+          </Separator>
+
+          <Separator bordered>
+            <Text>Recent</Text>
+          </Separator>
+        </Content>
+        <Button full success onPress={() => this.props.navigator.push('newGroup')}>
+          <Text>Create Group</Text>
+        </Button>
+      </Container>
+    )
+  }
+
+  _renderCalenderTab(tabName) {
     //Sort events by date
     const sortedEvents = this.props.events.sort((event1, event2) => {
       return event1.startTime - event2.startTime;
@@ -80,24 +115,23 @@ class EventsScreen extends React.Component {
       </Container>
     )
 
-  // _renderTab(tabName) {
-  //   return (
-  //     <Container>
-  //       <Content>
-  //         <Separator bordered>
-  //           <Text>Today</Text>
-  //         </Separator>
-  //         {this._renderEvent("beer pong", "4:20 pm")}
-  //         {this._renderEvent("data structs project", "12:00 am")}
-  //
-  //         <Separator bordered>
-  //           <Text>Tomorrow</Text>
-  //         </Separator>
-  //         {this._renderEvent("RUF", "6:00 pm")}
-  //         {this._renderEvent("sleep", "null")}
-  //       </Content>
-  //     </Container>
-  //   )
+    //   return (
+    //     <Container>
+    //       <Content>
+    //         <Separator bordered>
+    //           <Text>Today</Text>
+    //         </Separator>
+    //         {this._renderEvent("beer pong", "4:20 pm")}
+    //         {this._renderEvent("data structs project", "12:00 am")}
+    //
+    //         <Separator bordered>
+    //           <Text>Tomorrow</Text>
+    //         </Separator>
+    //         {this._renderEvent("RUF", "6:00 pm")}
+    //         {this._renderEvent("sleep", "null")}
+    //       </Content>
+    //     </Container>
+    //   )
   }
 
   _renderEvent(name, date) {

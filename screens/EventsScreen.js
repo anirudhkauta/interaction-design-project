@@ -8,6 +8,8 @@ import {
 } from '@expo/vector-icons';
 import { Container, Header, Title, Tabs, Tab, Separator, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, Input, Row, Switch, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
 
+import { formatDate, formatTime, getDayDisplayHeader } from '../api/datetime';
+
 class EventsScreen extends React.Component {
   render() {
     return (
@@ -47,24 +49,33 @@ class EventsScreen extends React.Component {
   }
 
   _renderTab(tabName) {
-    const eventsList = this.props.events.map((event) => {
-      return this._renderEvent(event.title, event.startTime);
+    //Sort events by date
+    const sortedEvents = this.props.events.sort((event1, event2) => {
+      return event1.startTime - event2.startTime;
     });
+
+    //Get jsx for events and their headers
+    //Headers will be the event's start day (today, tomorrow, thursday, etc)
+    let lastHeader = '';
+    const eventsListWithHeaders = [];
+    sortedEvents.forEach((event) => {
+      const header = getDayDisplayHeader(event.startTime);
+
+      if (header != lastHeader) {
+        eventsListWithHeaders.push(
+          <Separator bordered>
+            <Text>{header}</Text>
+          </Separator>
+        )
+        lastHeader = header;
+      }
+      eventsListWithHeaders.push(this._renderEvent(event.title, event.startTime));
+    });
+
     return (
       <Container>
         <Content>
-          <Separator bordered>
-            <Text>Today</Text>
-          </Separator>
-          {eventsList}
-          {this._renderEvent("beer pong", "4:20 pm")}
-          {this._renderEvent("data structs project", "12:00 am")}
-
-          <Separator bordered>
-            <Text>Tomorrow</Text>
-          </Separator>
-          {this._renderEvent("RUF", "6:00 pm")}
-          {this._renderEvent("sleep", "null")}
+          {eventsListWithHeaders}
         </Content>
       </Container>
     )
@@ -96,7 +107,7 @@ class EventsScreen extends React.Component {
           <Text>{name}</Text>
         </Body>
         <Right>
-            <Text>{date}</Text>
+            <Text>{formatTime(date)}</Text>
             <Icon name="arrow-forward" />
         </Right>
       </ListItem>

@@ -12,7 +12,7 @@ class DateTimeInputItem extends React.Component {
     super(props);
     this.state = {
       visible: false,
-      date: new Date(),
+      // date: new Date(),
     }
   }
 
@@ -23,8 +23,8 @@ class DateTimeInputItem extends React.Component {
       if (child.type == Input) {
         return (
           <View style={{flexDirection:'row', flex: 1, marginRight: 10}}>
-            <Input editable={false} value={formatDate(this.state.date)} />
-            <Input style={{textAlign: 'right'}} editable={false} value={formatTime(this.state.date)} />
+            <Input style={{flexGrow: 2}} editable={false} value={formatDate(this.props.value)} />
+            <Input style={{textAlign: 'right'}} editable={false} value={formatTime(this.props.value)} />
           </View>
         )
       }
@@ -34,9 +34,9 @@ class DateTimeInputItem extends React.Component {
     //Native datepicker
     const datetimePicker = (
       <DatePickerIOS
-        date={this.state.date}
+        date={this.props.value}
         mode="datetime"
-        onDateChange={(date) => this._handleOnDatetimeChange(date)}
+        onDateChange={(date) => this.props.onDatetimeChange(date)}
         minuteInterval={5}
       />
     )
@@ -55,13 +55,14 @@ class DateTimeInputItem extends React.Component {
     this.setState({visible: !this.state.visible});
   }
 
-  _handleOnDatetimeChange(date) {
-    this.setState({date: date});
-    this.props.onDatetimeChange(date);
-  }
+  // _handleOnDatetimeChange(date) {
+  //   this.setState({date: date});
+  //   this.props.onDatetimeChange(date);
+  // }
 }
 
 DateTimeInputItem.propTypes = {
+  value: PropTypes.instanceOf(Date),
   onDatetimeChange: PropTypes.func,
 }
 

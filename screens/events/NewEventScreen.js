@@ -13,11 +13,14 @@ import eventActions from '../../actions/events';
 class NewEventScreen extends React.Component {
   constructor(props) {
     super(props)
+
+    let initialStartTime = new Date();
+    initialStartTime.setHours(Math.ceil(initialStartTime.getHours()),0,0,0);
     this.state = {
       title: "",
       location: "",
-      startTime: -1,
-      endTime: -1,
+      startTime: initialStartTime,
+      durationMinutes: 60,
     }
   }
 
@@ -34,7 +37,7 @@ class NewEventScreen extends React.Component {
             <Title>New Event</Title>
           </Body>
           <Right>
-            <Button transparent onPress={() => this.props.onCreateEvent(this.state)}>
+            <Button transparent onPress={() => this.onCreateEvent()}>
               <Text>Create</Text>
             </Button>
           </Right>
@@ -43,18 +46,24 @@ class NewEventScreen extends React.Component {
         <Content>
           <Form>
             <Item>
-              <Input placeholder="Title" onChangeText={(text) => this.setState({title: text})} />
+              <Input placeholder="Name" onChangeText={(text) => this.setState({title: text})} />
             </Item>
             <Item last>
               <Icon name="compass" />
               <LocationInput navigator={this.props.navigator} placeholder="Location" onChangeText={(text) => this.setState({location: text})} />
             </Item>
             <Separator bordered />
-            <DateTimeInputItem onDatetimeChange={(text) => this.setState({startTime: text})}>
+            <DateTimeInputItem
+                value={this.state.startTime}
+                onDatetimeChange={(date) => this.setState({startTime: date})}
+              >
               <Icon name="calendar" />
               <Input placeholder="Starts" />
             </DateTimeInputItem>
-            <DateTimeInputItem onDatetimeChange={(text) => this.setState({endTime: text})}>
+            <DateTimeInputItem
+                value={this.getEndDate()}
+                onDatetimeChange={(date) => this.setState({durationMinutes: Math.round((date.getTime()-this.state.startTime.getTime())/(60*1000))})}
+              >
               <Icon name="calendar" />
               <Input placeholder="Ends" />
             </DateTimeInputItem>
@@ -62,6 +71,17 @@ class NewEventScreen extends React.Component {
         </Content>
       </Container>
     )
+  }
+
+  getEndDate() {
+    let date = new Date(this.state.startTime);
+    date.setMinutes(this.state.startTime.getMinutes() + this.state.durationMinutes);
+    return date;
+  }
+
+  onCreateEvent() {
+    this.props.onCreateEvent(this.state);
+    this.props.navigator.pop();
   }
 }
 

@@ -12,7 +12,7 @@ class DateTimeInputItem extends React.Component {
     super(props);
     this.state = {
       visibleElement: 'none', // 'date' | 'time' | 'none'
-      date: new Date(),
+      // date: new Date(),
     }
   }
 
@@ -23,8 +23,8 @@ class DateTimeInputItem extends React.Component {
       if (child.type == Input) {
         return (
           <View style={{flexDirection:'row', flex: 1, marginRight: 10}}>
-            <Input editable={false} value={formatDate(this.state.date)} onPress={() => this._handleOnFocus()}/>
-            <Input style={{textAlign: 'right'}} editable={false} value={formatTime(this.state.date)} onPress={() => this._handleOnFocus()} />
+            <Input style={{flexGrow: 2}} editable={false} value={formatDate(this.props.value)} onPress={() => this._handleOnFocus()}/>
+            <Input style={{textAlign: 'right'}} editable={false} value={formatTime(this.props.value)} onPress={() => this._handleOnFocus()} />
           </View>
         )
       }
@@ -45,15 +45,15 @@ class DateTimeInputItem extends React.Component {
     if (state.visibleElement == 'date') {
       return (
         <DatePickerAndroid
-          date={this.state.date}
-          onDateChange={(date) => this._handleOnDatetimeChange(date)}
+          date={this.props.value}
+          onDateChange={(date) => this.props.onDatetimeChange(date)}
         />
       )
     } else if (state.visibleElement == 'time') {
       return (
         <DatePickerAndroid
-          date={this.state.date}
-          onDateChange={(date) => this._handleOnDatetimeChange(date)}
+          date={this.props.value}
+          onDateChange={(date) => this.props.onDatetimeChange(date)}
         />
       )
     }
@@ -65,13 +65,14 @@ class DateTimeInputItem extends React.Component {
     this.setState({visible: !this.state.visible});
   }
 
-  _handleOnDatetimeChange(date) {
-    this.setState({date: date});
-    this.props.onDatetimeChange(date);
-  }
+  // _handleOnDatetimeChange(date) {
+  //   this.setState({date: date});
+  //   this.props.onDatetimeChange(date);
+  // }
 }
 
 DateTimeInputItem.propTypes = {
+  value: PropTypes.instanceOf(Date),
   onDatetimeChange: PropTypes.func,
 }
 

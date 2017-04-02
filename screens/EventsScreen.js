@@ -8,13 +8,15 @@ import {
 } from '@expo/vector-icons';
 import { Container, Header, Title, Tabs, Tab, Separator, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, Input, Row, Switch, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
 
+import HeaderWithSearchIcon from '../components/HeaderWithSearchIcon';
+
 import { formatDate, formatTime, getDayDisplayHeader } from '../api/datetime';
 
 class EventsScreen extends React.Component {
   render() {
     return (
       <Container>
-        <Header hasTabs>
+        <HeaderWithSearchIcon hasTabs>
           <Left>
             <Button transparent onPress={() => this.props.navigator.pop()}>
               <Icon name='arrow-back' />
@@ -24,14 +26,11 @@ class EventsScreen extends React.Component {
             <Title>Events</Title>
           </Body>
           <Right>
-            <Button transparent>
-              <Icon name='search' />
-            </Button>
             <Button transparent onPress={() => this.props.navigator.push('newEvent')}>
               <Icon name='add' />
             </Button>
           </Right>
-        </Header>
+        </HeaderWithSearchIcon>
 
         <Tabs>
           <Tab heading="My Events">

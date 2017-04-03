@@ -5,7 +5,7 @@ import {
 } from 'react-native'
 import { Container, Title, Content, Item, Input } from 'native-base';
 
-import { formatDate, formatTime } from '../../api/datetime';
+import { formatDateRaw, formatTime } from '../../api/datetime';
 
 class DateTimeInputItem extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class DateTimeInputItem extends React.Component {
       if (child.type == Input) {
         return (
           <View style={{flexDirection:'row', flex: 1, marginRight: 10}}>
-            <Input style={{flexGrow: 2}} editable={false} value={formatDate(this.props.value)} />
+            <Input style={{flexGrow: 2}} editable={false} value={formatDateRaw(this.props.value)} />
             <Input style={{textAlign: 'right'}} editable={false} value={formatTime(this.props.value)} />
           </View>
         )
@@ -37,6 +37,7 @@ class DateTimeInputItem extends React.Component {
         date={this.props.value}
         mode="datetime"
         onDateChange={(date) => this.props.onDatetimeChange(date)}
+        minimumDate={this.props.minimumDate}
         minuteInterval={5}
       />
     )
@@ -64,6 +65,7 @@ class DateTimeInputItem extends React.Component {
 DateTimeInputItem.propTypes = {
   value: PropTypes.instanceOf(Date),
   onDatetimeChange: PropTypes.func,
+  minimumDate: PropTypes.instanceOf(Date),
 }
 
 export default DateTimeInputItem;

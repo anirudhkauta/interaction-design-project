@@ -11,7 +11,7 @@ import { View, Container, Header, Title, Tabs, Tab, Separator, Content, ListItem
 import HeaderWithSearchIcon from '../components/HeaderWithSearchIcon';
 import RoundedButton from '../components/input/RoundButton';
 
-import { formatDate, formatTime, formatTimeRange, getDayDisplayHeader } from '../api/datetime';
+import { formatTime, formatDate, formatDatetimeRange } from '../api/datetime';
 
 class EventsScreen extends React.Component {
   render() {
@@ -94,7 +94,7 @@ class EventsScreen extends React.Component {
     let lastHeader = '';
     const eventsListWithHeaders = [];
     sortedEvents.forEach((event) => {
-      const header = getDayDisplayHeader(event.startTime);
+      const header = formatDate(event.startTime);
 
       if (header != lastHeader) {
         eventsListWithHeaders.push(
@@ -114,28 +114,9 @@ class EventsScreen extends React.Component {
         </Content>
       </Container>
     )
-
-    //   return (
-    //     <Container>
-    //       <Content>
-    //         <Separator bordered>
-    //           <Text>Today</Text>
-    //         </Separator>
-    //         {this._renderEvent("beer pong", "4:20 pm")}
-    //         {this._renderEvent("data structs project", "12:00 am")}
-    //
-    //         <Separator bordered>
-    //           <Text>Tomorrow</Text>
-    //         </Separator>
-    //         {this._renderEvent("RUF", "6:00 pm")}
-    //         {this._renderEvent("sleep", "null")}
-    //       </Content>
-    //     </Container>
-    //   )
   }
 
   _renderEvent(event) {
-    const formattedTimeRange = formatTimeRange(event.startTime, event.endTime);
 
     return (
       <ListItem avatar last onPress={() => this.props.navigator.push('ViewEventScreen', {event})}>
@@ -148,13 +129,13 @@ class EventsScreen extends React.Component {
         </Left>
         <Body>
           <Text>{event.title}</Text>
-          <Text note>{formattedTimeRange.startTime} - {formattedTimeRange.endTime+(formattedTimeRange.hasDifferentEnoughEndDate ? ' '+formattedTimeRange.endDate : '')}</Text>
+          <Text note>{formatDatetimeRange(event.startTime, event.endTime)}</Text>
           <Text note></Text>
           <Text note>{event.location}</Text>
         </Body>
         <Right style={{justifyContent:"space-around", paddingVertical:5}}>
           <Icon name="arrow-forward" style={{marginRight:5,paddingTop:10}}/>
-          <Text note style={{color: '#FF9501'}}>Food</Text>
+          <Text note style={{color: '#FF9501'}}>{event.food.length > 0 ? 'Food' : ''}</Text>
         </Right>
       </ListItem>
     )

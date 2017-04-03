@@ -1,11 +1,6 @@
 const DAYS_OF_WEEK = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-export function formatDate(date) {
-  const year = date.getFullYear();
-  return DAYS_OF_WEEK[date.getDay()]+', '+MONTHS[date.getMonth()]+' '+date.getDate()+(new Date().getFullYear() == year ? '' : ', '+year);
-}
-
 export function formatTime(date, showAmOrPm) {
   let hours = date.getHours();
   let amOrPm;
@@ -27,26 +22,13 @@ export function formatTime(date, showAmOrPm) {
   return hours+':'+minutes+amOrPm;
 }
 
-// returns an object with the fomatted start and end dates
-// return {start: Date, end: Date}
-export function formatTimeRange(startDate, endDate) {
-  const hourDifference = (endDate.getTime() - startDate.getTime())/(60*60*1000);
-  const formattedStartDate = getDayDisplayHeader(startDate);
-  const formattedEndDate = getDayDisplayHeader(endDate);
-  const hasDifferentEnoughEndDate = formattedStartDate != formattedEndDate && hourDifference >= 12;
-
-  return {
-    startDate: formattedStartDate,
-    startTime: formatTime(startDate, hasDifferentEnoughEndDate),
-    endDate: formattedEndDate,
-    endTime: formatTime(endDate, true),
-    hasDifferentEnoughEndDate: hasDifferentEnoughEndDate,
-    // hasDifferentEndDate: formattedStartDate != formattedEndDate,
-  };
+export function formatDateRaw(date) {
+  const year = date.getFullYear();
+  return DAYS_OF_WEEK[date.getDay()]+', '+MONTHS[date.getMonth()]+' '+date.getDate()+(new Date().getFullYear() == year ? '' : ', '+year);
 }
 
 //Returns today, tomorrow, Thurdsay, 2/4/18, etc depending on date
-export function getDayDisplayHeader(date) {
+export function formatDate(date) {
   let now = new Date();
   let daysSinceToday = getDayOffset(date, now);
 
@@ -58,7 +40,7 @@ export function getDayDisplayHeader(date) {
     return DAYS_OF_WEEK[date.getDay()];
   }
 
-  return formatDate(date);
+  return formatDateRaw(date);
 }
 
 //Gets the difference between the morning two dates in days.
@@ -71,6 +53,19 @@ function getDayOffset(date1, date2) {
   date2.setHours(0,0,0);
   //Return difference
   return Math.round(Math.abs((date1.getTime() - date2.getTime())/(24*60*60*1000)));
+}
+
+// returns an object with the fomatted start and end dates
+// return {start: Date, end: Date}
+export function formatDatetimeRange(startDate, endDate) {
+  const hourDifference = (endDate.getTime() - startDate.getTime())/(60*60*1000);
+  const formattedStartDate = formatDate(startDate);
+  const formattedEndDate = formatDate(endDate);
+  const hasDifferentEnoughEndDate = formattedStartDate != formattedEndDate && hourDifference >= 12;
+  const startTime = formatTime(startDate, hasDifferentEnoughEndDate);
+  const endTime = formatTime(endDate, true);
+
+  return startTime+' - '+endTime+(hasDifferentEnoughEndDate ? ' '+formattedEndDate : '');
 }
 
 // export function getEndDate(startTime, durationMinutes) {

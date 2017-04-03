@@ -89,6 +89,7 @@ class NewEventScreen extends React.Component {
             <DateTimeInputItem
                 value={this.state.startTime}
                 onDatetimeChange={(date) => this.setState({startTime: date})}
+                minimumDate={new Date()/*<-current time*/}
               >
               <Icon name="calendar" />
               <Input placeholder="Starts" />
@@ -96,6 +97,7 @@ class NewEventScreen extends React.Component {
             <DateTimeInputItem
                 value={this.getEndDate(this.state.startTime, this.state.durationMinutes)}
                 onDatetimeChange={(date) => this.setState({durationMinutes: Math.round((date.getTime()-this.state.startTime.getTime())/(60*1000))})}
+                minimumDate={this.state.startTime}
               >
               <Icon name="calendar" />
               <Input placeholder="Ends" />

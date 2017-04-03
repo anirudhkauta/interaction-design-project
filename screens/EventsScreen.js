@@ -120,12 +120,8 @@ class EventsScreen extends React.Component {
 
     return (
       <ListItem avatar last onPress={() => this.props.navigator.push('ViewEventScreen', {event})}>
-        <Left style={{flexDirection: 'column'}}>
-          <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-around'}}>
-            <RoundedButton>
-              <Icon fontSize={45} style={{backgroundColor: 'transparent',fontSize:35}} name="compass" />
-            </RoundedButton>
-          </View>
+        <Left>
+          <Thumbnail square backgroundColor='grey' />
         </Left>
         <Body>
           <Text>{event.title}</Text>

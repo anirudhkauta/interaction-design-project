@@ -6,11 +6,12 @@ import {
 import {
   FontAwesome,
 } from '@expo/vector-icons';
-import { Container, Header, Title, Tabs, Tab, Separator, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, Input, Row, Switch, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
+import { View, Container, Header, Title, Tabs, Tab, Separator, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, Input, Row, Switch, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
 
 import HeaderWithSearchIcon from '../components/HeaderWithSearchIcon';
+import RoundedButton from '../components/input/RoundButton';
 
-import { formatDate, formatTime, getDayDisplayHeader } from '../api/datetime';
+import { formatDate, formatTime, formatTimeRange, getDayDisplayHeader } from '../api/datetime';
 
 class EventsScreen extends React.Component {
   render() {
@@ -103,7 +104,7 @@ class EventsScreen extends React.Component {
         )
         lastHeader = header;
       }
-      eventsListWithHeaders.push(this._renderEvent(event.title, event.startTime));
+      eventsListWithHeaders.push(this._renderEvent(event));
     });
 
     return (
@@ -133,19 +134,74 @@ class EventsScreen extends React.Component {
     //   )
   }
 
-  _renderEvent(name, date) {
+  _renderEvent(event) {
+    const formattedTimeRange = formatTimeRange(event.startTime, event.endTime);
+
     return (
-      <ListItem icon last>
+      <ListItem avatar last onPress={() => this.props.navigator.push('ViewEventScreen', {event})}>
+        <Left style={{flexDirection: 'column'}}>
+          <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-around'}}>
+            <RoundedButton>
+              <Icon fontSize={45} style={{backgroundColor: 'transparent',fontSize:35}} name="compass" />
+            </RoundedButton>
+          </View>
+        </Left>
         <Body>
-          <Text>{name}</Text>
+          <Text>{event.title}</Text>
+          <Text note>{formattedTimeRange.startTime} - {formattedTimeRange.endTime+(formattedTimeRange.hasDifferentEnoughEndDate ? ' '+formattedTimeRange.endDate : '')}</Text>
+          <Text note></Text>
+          <Text note>{event.location}</Text>
         </Body>
-        <Right>
-            <Text>{formatTime(date)}</Text>
-            <Icon name="arrow-forward" />
+        <Right style={{justifyContent:"space-around", paddingVertical:5}}>
+          <Icon name="arrow-forward" style={{marginRight:5,paddingTop:10}}/>
+          <Text note style={{color: '#FF9501'}}>Food</Text>
         </Right>
       </ListItem>
     )
   }
+  //   return (
+  //     <ListItem avatar last>
+  //       <Left style={{flexDirection: 'column'}}>
+  //         <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-around'}}>
+  //           <RoundedButton>
+  //             <Icon fontSize={45} style={{backgroundColor: 'transparent',fontSize:35}} name="compass" />
+  //           </RoundedButton>
+  //           <Text note style={{color: '#FF9501', alignSelf:"center"}}>Food</Text>
+  //         </View>
+  //       </Left>
+  //       <Body>
+  //         <Text>Group Name</Text>
+  //         <Text note>{event.title}</Text>
+  //         <Text note></Text>
+  //         <Text note>{event.location}</Text>
+  //       </Body>
+  //       <Right>
+  //         <Text note>{formattedTimeRange.startTime} -</Text>
+  //         <Text note>{formattedTimeRange.endTime+(formattedTimeRange.hasDifferentEnoughEndDate ? ' '+formattedTimeRange.endDate : '')}</Text>
+  //         <Text></Text>
+  //         <Text note style={{color: '#FF9501'}}>Food</Text>
+  //       </Right>
+  //     </ListItem>
+  //   )
+  // }
+  //   return (
+  //     <ListItem icon last>
+  //       <Left>
+  //         <RoundedButton icon>
+  //           <Icon name="compass"></Icon>
+  //         </RoundedButton>
+  //       </Left>
+  //       <Body>
+  //         <Text>Group Name</Text>
+  //         <Text note>{name}</Text>
+  //       </Body>
+  //       <Right>
+  //           <Text>{formatTime(date)}</Text>
+  //           <Icon name="arrow-forward" />
+  //       </Right>
+  //     </ListItem>
+  //   )
+  // }
 }
 
 EventsScreen.propTypes = {

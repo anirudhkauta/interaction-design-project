@@ -9,6 +9,7 @@ import PlacesScreen from '../screens/PlacesScreen';
 import ClassesScreen from '../screens/ClassesScreen';
 //Events
 import NewEventScreen from '../screens/events/NewEventScreen'
+import ViewEventScreen from '../screens/events/ViewEventScreen'
 //Classes
 import ClassScreen from '../screens/classes/ClassScreen';
 
@@ -24,6 +25,7 @@ export default createRouter(() => ({
 
   //Events
   newEvent: () => NewEventScreen,
+  ViewEventScreen: () => ViewEventScreen,
 
   //Classes
   classScreen: () => ClassScreen,

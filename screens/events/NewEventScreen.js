@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {
-  Image,
+  Animated,
+  Image,View
 } from 'react-native'
 import { ActionSheet, Container, Header, Form, Title, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, InputGroup, Input, Row, Switch, Separator, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
 
@@ -10,6 +11,8 @@ import DateTimeInputItem from '../../components/input/DateTimeInputItem';
 
 import eventActions from '../../actions/events';
 
+// import { getEndDate } from '../../api/datetime';
+
 class NewEventScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -17,18 +20,41 @@ class NewEventScreen extends React.Component {
     let initialStartTime = new Date();
     initialStartTime.setHours(Math.ceil(initialStartTime.getHours()+initialStartTime.getMinutes()/60),0,0,0);
     this.state = {
+      locationFieldAnim: new Animated.Value(1),
       title: "",
       location: "",
 
       startTime: initialStartTime,
+      /*endTime: calculated before event is created*/
       durationMinutes: 60,
 
       food: "",
     }
   }
 
+  // componentDidMount() {
+  //   // Print component dimensions to console
+  //   this.refs.locationField.measure( (fx, fy, width, height, px, py) => {
+  //     this.setState({locationFieldY: py});
+  //   });
+  // }
+
+  startLocationFieldAnim() {
+    this.state.locationFieldAnim.setValue(0);
+
+    Animated.timing(
+      this.state.locationFieldAnim,
+      {
+        toValue: -this.state.locationFieldY,
+        duration: 200,
+      },
+    ).start();
+  }
+
   render() {
+    this.startLocationFieldAnim();//<Animated.View style={{position:'absolute',left:0,top:this.state.locationFieldAnim,right:0,bottom:-this.state.locationFieldAnim}}>
     return (
+      <Animated.View style={{position:'absolute',left:0,top:0,right:0,bottom:0}}>
       <Container>
         <Header>
           <Left>
@@ -53,7 +79,7 @@ class NewEventScreen extends React.Component {
             <Item>
               <Input autoFocus placeholder="Name" onChangeText={(text) => this.setState({title: text})} />
             </Item>
-            <Item last>
+            <Item last onLayout={(event) => this.setState({locationFieldY: event.nativeEvent.layout.y})}>
               <Icon name="compass" />
               <LocationInput navigator={this.props.navigator} placeholder="Location" onChangeText={(text) => this.setState({location: text})} />
             </Item>
@@ -68,7 +94,7 @@ class NewEventScreen extends React.Component {
               <Input placeholder="Starts" />
             </DateTimeInputItem>
             <DateTimeInputItem
-                value={this.getEndDate()}
+                value={this.getEndDate(this.state.startTime, this.state.durationMinutes)}
                 onDatetimeChange={(date) => this.setState({durationMinutes: Math.round((date.getTime()-this.state.startTime.getTime())/(60*1000))})}
               >
               <Icon name="calendar" />
@@ -88,6 +114,7 @@ class NewEventScreen extends React.Component {
           </Form>
         </Content>
       </Container>
+      </Animated.View>
     )
   }
 
@@ -201,6 +228,7 @@ class NewEventScreen extends React.Component {
   }
 
   onCreateEvent() {
+    this.state.endTime = this.getEndDate(this.state.startTime, this.state.durationMinutes);
     this.props.onCreateEvent(this.state);
     this.props.navigator.pop();
   }

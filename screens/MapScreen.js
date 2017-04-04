@@ -12,6 +12,13 @@ export default class MapScreen extends React.Component {
     super(props);
     this.state = {
       isFabActive: false,
+      fabDisabledEvents: {
+        filter1: false,
+        filter2: false,
+        filter3: false,
+        filter4: false,
+        filter5: false,
+      }
     }
   }
   render() {
@@ -49,28 +56,48 @@ export default class MapScreen extends React.Component {
               onPress={() => this.setState({isFabActive: !this.state.isFabActive})}
           >
               <Icon name="plus" />
-              {this.renderFabButtonRow('#FFF', '#252932', 'icon', 'icon')}
-              {this.renderFabButtonRow('#FFF', '#d9534f', 'icon', 'icon')}
-              {this.renderFabButtonRow('#FFF', '#5cb85c', 'icon', 'icon')}
-              {this.renderFabButtonRow('#FFF', '#62B1F6', 'icon', 'icon')}
-              {this.renderFabButtonRow('#FF9501', 'rgba(255,255,255,.9)', 'food', 'Food')}
-              {this.renderFabButtonRow('#FFF', '#2874F0', 'add', 'New Event')}
+              {this.renderFabFilterButtonRow('#FFF', '#252932', 'icon', 'icon', 'filter1')}
+              {this.renderFabFilterButtonRow('#FFF', '#d9534f', 'icon', 'icon', 'filter2')}
+              {this.renderFabFilterButtonRow('#FFF', '#5cb85c', 'icon', 'icon', 'filter3')}
+              {this.renderFabFilterButtonRow('#FFF', '#62B1F6', 'icon', 'icon', 'filter4')}
+              {this.renderFabFilterButtonRow('#FF9501', 'rgba(255,255,255,.9)', 'food', 'Food', 'filter5')}
+              {this.renderFabButtonRow('#FFF', '#2874F0', 'add', 'New Event', false, () => {this.props.navigator.push('newEvent')})}
           </Fab>
       </View>
       </Container>
     )
   }
 
-  renderFabButtonRow(outlineColor, fillColor, icon, text) {
+  renderFabFilterButtonRow(outlineColor, fillColor, icon, text, filterName) {
+    return this.renderFabButtonRow(outlineColor, fillColor, icon, text, this.state.fabDisabledEvents[filterName],
+      () => {
+        this.setState({
+          fabDisabledEvents: {
+            ...this.state.fabDisabledEvents,
+            [filterName]: !this.state.fabDisabledEvents[filterName]
+          }
+        })
+      });
+  }
+
+  renderFabButtonRow(outlineColor, fillColor, icon, text, disabled, onPress) {
+    if (disabled) {
+      outlineColor = '#FFF';
+      fillColor = '#D6D6D6';
+    }
+
     return (
-      <View style={{pflexDirection:'row', justifyContent:'space-between',  borderRadius:null,height:null,width:null, backgroundColor:'transparent'}}>
-        {this.renderFabButton(outlineColor, fillColor, icon)}
+      <View
+        style={{pflexDirection:'row', justifyContent:'space-between',  borderRadius:null,height:null,width:null, backgroundColor:'transparent'}}
+        onPress={onPress}
+      >
+        {this.renderFabButton(outlineColor, fillColor, icon, onPress)}
         <Text style={{color:null, flexGrow:1, marginLeft:10}}>{text}</Text>
       </View>
     )
   }
 
-  renderFabButton(outlineColor, fillColor, icon) {
+  renderFabButton(outlineColor, fillColor, icon, onPress) {
     const outerDiameter=32;
     const innerDiameter=28;
     const fontSize=20;
@@ -85,7 +112,9 @@ export default class MapScreen extends React.Component {
     }
     return (
       <Button style={{backgroundColor: outlineColor, width:outerDiameter, height:outerDiameter, borderRadius:outerDiameter/2, ...shadow,
-        alignItems:'center',padding:null,justifyContent:'center'}}>
+        alignItems:'center',padding:null,justifyContent:'center'}}
+        onPress={onPress}
+      >
         <Content style={{backgroundColor: fillColor,
             flex:0,flexGrow:0,width:innerDiameter,height:innerDiameter,borderRadius:innerDiameter/2,
             alignItems:'center',padding:null,justifyContent:'center'}}

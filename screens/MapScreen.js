@@ -11,6 +11,7 @@ export default class MapScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isTopFilterRowActive: false,
       isFabActive: false,
       fabDisabledEvents: {
         filter1: false,
@@ -35,13 +36,24 @@ export default class MapScreen extends React.Component {
             <Input placeholder="Search" />
           </Item>
           <Right style={{flex:0}}>
-            <Button transparent>
-              <Icon name='menu' />
+            <Button transparent onPress={() => {this.setState({isTopFilterRowActive: !this.state.isTopFilterRowActive})}}>
+              <Icon name='filter' />
             </Button>
           </Right>
         </Header>
 
         <View style={{flex:1}}>
+          <View style={{zIndex:10, flexDirection:'row', paddingTop:2, opacity:this.state.isTopFilterRowActive}}>
+            <Button small style={{marginLeft:2}}>
+              <Text>Today</Text>
+            </Button>
+            <Button small style={{marginLeft:2}}>
+              <Text>Not during class</Text>
+            </Button>
+            <Button small light style={{marginLeft:2}}>
+              <Text>Classes</Text>
+            </Button>
+          </View>
           <View style={{position:'absolute',left:0,top:0,right:0,bottom:0}}>
             <Map />
           </View>

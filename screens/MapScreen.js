@@ -68,10 +68,10 @@ export default class MapScreen extends React.Component {
               onPress={() => this.setState({isFabActive: !this.state.isFabActive})}
           >
               <Icon name="plus" />
-              {this.renderFabFilterButtonRow('#FFF', '#252932', 'icon', 'icon', 'filter1')}
-              {this.renderFabFilterButtonRow('#FFF', '#d9534f', 'icon', 'icon', 'filter2')}
-              {this.renderFabFilterButtonRow('#FFF', '#5cb85c', 'icon', 'icon', 'filter3')}
-              {this.renderFabFilterButtonRow('#FFF', '#62B1F6', 'icon', 'icon', 'filter4')}
+              {this.renderFabFilterButtonRow('#FFF', '#252932', 'icon', '_', 'filter1')}
+              {this.renderFabFilterButtonRow('#FFF', '#d9534f', 'icon', '_', 'filter2')}
+              {this.renderFabFilterButtonRow('#FFF', '#5cb85c', 'icon', '_', 'filter3')}
+              {this.renderFabFilterButtonRow('#FFF', '#62B1F6', 'icon', '_', 'filter4')}
               {this.renderFabFilterButtonRow('#FF9501', 'rgba(255,255,255,.9)', 'food', 'Food', 'filter5')}
               {this.renderFabButtonRow('#FFF', '#2874F0', 'add', 'New Event', false, () => {this.props.navigator.push('newEvent')})}
           </Fab>

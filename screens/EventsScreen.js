@@ -17,7 +17,7 @@ class EventsScreen extends React.Component {
   render() {
     return (
       <Container>
-        <HeaderWithSearchIcon hasTabs>
+        <HeaderWithSearchIcon hasTabs red style={{backgroundColor:'blue'}}>
           <Left>
             <Button transparent onPress={() => this.props.navigator.pop()}>
               <Icon name='arrow-back' />

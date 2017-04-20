@@ -40,10 +40,10 @@ export default class HomeScreen extends React.Component {
       <Container>
         <Content style={{marginTop:20}}>
           <Image style={{width: width-10, height: 110}} source={require('../assets/images/TU-wordmark.png')} />
-          {this._renderRow('Maps', 'compass', '#56cc5c', 'map')}
-          {this._renderRow('Events', 'calendar', '#3f9644', 'events')}
-          {this._renderRow('Campus Locations', 'building', '#3f9696', 'places')}
-          {this._renderRow('Classes', 'graduation-cap', '#ff8ce0', 'classes')}
+          {this._renderRow('Campus View', 'search', '#56cc5c', 'map')}
+          {this._renderRow('Events', 'calendar', '#8A2BE2', 'events')}
+          {this._renderRow('Campus Locations', 'compass', '#003DCC', 'places')}
+          {this._renderRow('Classes', 'paper', '#FFB405', 'classes')}
           {this._renderRow('Friends', 'people', '#e61e60', 'friends')}
       </Content>
     </Container>
@@ -62,7 +62,7 @@ export default class HomeScreen extends React.Component {
           <Text>{name}</Text>
         </Body>
         <Right style={{height: 60}}>
-          <Icon name="arrow-forward" style={{color: '#FFFF59'}}/>
+          <Icon name="arrow-forward" style={{color: '#002566'}}/>
         </Right>
       </ListItem>
     )

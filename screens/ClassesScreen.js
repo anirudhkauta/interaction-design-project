@@ -32,7 +32,7 @@ export default class MapScreen extends React.Component {
 
         <Content>
           <Separator bordered>
-            <Text>Current Semester</Text>
+            <Text>Current Semester (Spring 2017) </Text>
           </Separator>
           {this._renderClass("data structures")}
           {this._renderClass("interaction design")}
@@ -40,8 +40,8 @@ export default class MapScreen extends React.Component {
           <Separator bordered>
             <Text>Fall 2016</Text>
           </Separator>
-          {this._renderClass("algorithms")}
-          {this._renderClass("physics")}
+          {this._renderClass("CS 2003: Fundamentals of Algorithms")}
+          {this._renderClass("PHYS 0000: Physics 1")}
           {this._renderClass("a really really really long class name")}
         </Content>
       </Container>

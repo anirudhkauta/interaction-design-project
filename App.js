@@ -40,6 +40,9 @@ class AppContainer extends React.Component {
         images: [
           require('./assets/images/TU-wordmark.png'),
         ],
+        fonts:[
+          {'Roboto_medium':require('./assets/fonts/Roboto_medium.ttf')},
+        ],
       });
     } catch(e) {
       console.warn(

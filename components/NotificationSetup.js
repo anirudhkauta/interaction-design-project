@@ -77,7 +77,7 @@ export default class NotificationSetup extends React.Component {
   }
 
   _handleNotification = ({origin, data}) => {
-    alert('notification recieved. TODO handle notification in NotificationSetup.js');
+    // alert('notification recieved. TODO handle notification in NotificationSetup.js');
     // this.props.navigator.showLocalAlert(
     //   `Push notification ${origin} with data: ${JSON.stringify(data)}`,
     //   Alerts.notice

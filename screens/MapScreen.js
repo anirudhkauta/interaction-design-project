@@ -43,7 +43,7 @@ export default class MapScreen extends React.Component {
         </Header>
 
         <View style={{flex:1}}>
-          <View style={{zIndex:10, flexDirection:'row', paddingTop:2, opacity:this.state.isTopFilterRowActive}}>
+          <View style={{zIndex:10, flexDirection:'row', paddingTop:2, opacity:this.state.isTopFilterRowActive? 1:0}}>
             <Button small style={{marginLeft:2}}>
               <Text>Today</Text>
             </Button>

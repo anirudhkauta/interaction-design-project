@@ -5,7 +5,7 @@ import {
 import {
   FontAwesome,
 } from '@expo/vector-icons';
-import { Container, Header, Title, Tabs, Tab, Separator, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, Input, Row, Switch, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
+import { View, H1, Container, Header, Title, Tabs, Tab, Separator, Content, ListItem, Left, Button, Body, Right, Card, CardItem, Item, Input, Row, Switch, Radio, Grid, Text, Icon, Badge, Thumbnail } from 'native-base';
 
 class ClassScreen extends React.Component {
   render() {
@@ -28,14 +28,14 @@ class ClassScreen extends React.Component {
         </Header>
 
         <Tabs>
-          <Tab heading="Description">
-            {this._renderTab()}
+          <Tab heading="Information">
+            {this._renderDescriptionTab()}
           </Tab>
           <Tab heading="Tutors">
-            {this._renderTab()}
+            {this._renderTutorsTab()}
           </Tab>
           <Tab heading="Reviews">
-            {this._renderTab()}
+            {this._renderReviewsTab()}
           </Tab>
         </Tabs>
       </Container>
@@ -46,36 +46,98 @@ class ClassScreen extends React.Component {
   //   <Text>Create Event</Text>
   // </Button>
 
-  _renderTab(tabName) {
+  _renderDescriptionTab(tabName) {
     return (
       <Container>
         <Content>
-          <Text>Class time: 3:30 PM - 4:45 PM</Text>
-          <Text>Tuesdays/Thursdays</Text>
+          {this._renderContact("S. Kuttal", "email@utulsa.edu")}
 
-          <Text>Location: Keplinger Hall Room M3</Text>
+          <ListItem icon>
+            <Left>
+              <Icon name="clock"></Icon>
+            </Left>
+            <Body>
+              <Text>3:30 PM - 4:45 PM</Text>
+              <Text>Tuesdays/Thursdays</Text>
+            </Body>
+          </ListItem>
 
-          <Text>Instructor: S. Kuttal</Text>
-          <Text>Email: email@utulsa.edu</Text>
-          <Text>Phone: 555-555-5555</Text>
+          <ListItem icon>
+            <Left>
+              <Icon name="compass"></Icon>
+            </Left>
+            <Body>
+              <Text>Location: Keplinger Hall Room M3</Text>
+            </Body>
+          </ListItem>
 
-          <Text>Description:</Text>
-          <Text>This class teaches students the fundamentals of interaction design.</Text>
+          <Separator>
+          </Separator>
+
+
+
+          <View>
+            <Item>
+              <Left>
+                <Icon name="paper"></Icon>
+              </Left>
+              <Body>
+                <Text>Description</Text>
+              </Body>
+            </Item>
+            <Text>This class teaches students the fundamentals of interaction design.</Text>
+          </View>
+
         </Content>
       </Container>
     )
   }
 
-  _renderEvent(name, date, isLast) {
+  _renderTutorsTab(tabName) {
     return (
-      <ListItem icon last>
+      <Container>
+        <Content>
+          {this._renderContact("Glorious Leader", "email@utulsa.edu")}
+        </Content>
+      </Container>
+    )
+  }
+
+  _renderReviewsTab(tabName) {
+    return (
+      <Container>
+        <Content>
+          <ListItem>
+            <Body>
+              <Item style={{borderWidth:null}}>
+                <Left><Text style={{fontWeight: 'bold'}}>Glorious Leader</Text></Left>
+                <Right><Text note>2/3/4</Text></Right>
+              </Item>
+              <Text>This is a really long review. I learned so much al-gebra. 1 + 1 is approximately 2</Text>
+            </Body>
+          </ListItem>
+        </Content>
+
+        <Button full onPress={() => this.props.navigator.push('NewClassReviewScreen')}>
+          <Text>New Review</Text>
+        </Button>
+      </Container>
+    )
+  }
+
+
+
+
+  _renderContact(name, email) {
+    return (
+      <ListItem icon>
+        <Left>
+          <Icon name="person"></Icon>
+        </Left>
         <Body>
           <Text>{name}</Text>
+          <Text>{email}</Text>
         </Body>
-        <Right>
-            <Text>{date}</Text>
-            <Icon name="arrow-forward" />
-        </Right>
       </ListItem>
     )
   }

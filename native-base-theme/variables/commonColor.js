@@ -46,7 +46,7 @@ export default {
   segmentActiveTextColor: '#3F51B5',
   segmentBorderColor: '#fff',
   segmentBorderColorMain: '#3F51B5',
-  
+
     // New Variable
   get defaultTextColor() {
     return this.textColor;
@@ -112,7 +112,13 @@ export default {
 
 
       // Color
-  brandPrimary: '#2874F0',
+  // brandPrimary: '#2874F0',
+  // brandInfo: '#62B1F6',
+  // brandSuccess: '#5cb85c',
+  // brandDanger: '#d9534f',
+  // brandWarning: '#f0ad4e',
+  // brandSidebar: '#252932',
+  brandPrimary: '#003dcc',
   brandInfo: '#62B1F6',
   brandSuccess: '#5cb85c',
   brandDanger: '#d9534f',

@@ -36,29 +36,29 @@ class DateTimeInputItem extends React.Component {
         <Item {...this.props}>
           {children}
         </Item>
-        {renderPicker()}
+        {this.renderPicker()}
       </View>
     )
   }
 
   renderPicker() {
-    if (state.visibleElement == 'date') {
+    if (this.state.visibleElement == 'date') {
       return (
         <DatePickerAndroid
           date={this.props.value}
           onDateChange={(date) => this.props.onDatetimeChange(date)}
         />
       )
-    } else if (state.visibleElement == 'time') {
+    } else if (this.state.visibleElement == 'time') {
       return (
-        <DatePickerAndroid
+        <TimePickerAndroid
           date={this.props.value}
           onDateChange={(date) => this.props.onDatetimeChange(date)}
         />
       )
     }
 
-    return nil;
+    return null;
   }
 
   _handleOnFocus() {

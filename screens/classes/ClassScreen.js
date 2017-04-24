@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import {
   Image,
+  Linking,
 } from 'react-native'
 import {
   FontAwesome,
@@ -18,7 +20,7 @@ class ClassScreen extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>{this.props.className}</Title>
+            <Title>{this.props.classObj.name}</Title>
           </Body>
           <Right style={{flex:0}}>
             <Button transparent>
@@ -50,7 +52,7 @@ class ClassScreen extends React.Component {
     return (
       <Container>
         <Content>
-          {this._renderContact("S. Kuttal", "email@utulsa.edu")}
+          {this._renderContact('S. Kuttal', 'email@utulsa.edu')}
 
           <ListItem icon>
             <Left>
@@ -94,16 +96,34 @@ class ClassScreen extends React.Component {
   }
 
   _renderTutorsTab(tabName) {
+    let tutors = this.props.tutors.map((tutor) =>
+      this._renderContact(tutor.name, tutor.email, 'subject=Tutoring for '+this.props.classObj.name)
+    );
+
     return (
       <Container>
         <Content>
-          {this._renderContact("Glorious Leader", "email@utulsa.edu")}
+          {tutors}
         </Content>
       </Container>
     )
   }
 
   _renderReviewsTab(tabName) {
+    let reviews = this.props.classObj.reviews.map((review) => {
+      return (
+        <ListItem>
+          <Body>
+            <Item style={{borderWidth:null}}>
+              <Left><Text style={{fontWeight: 'bold'}}>Glorious Leader</Text></Left>
+              <Right><Text note>2/3/4</Text></Right>
+            </Item>
+            <Text>{review.body}</Text>
+          </Body>
+        </ListItem>
+      )
+    });
+
     return (
       <Container>
         <Content>
@@ -116,9 +136,11 @@ class ClassScreen extends React.Component {
               <Text>This is a really long review. I learned so much al-gebra. 1 + 1 is approximately 2</Text>
             </Body>
           </ListItem>
+
+          {reviews}
         </Content>
 
-        <Button full onPress={() => this.props.navigator.push('NewClassReviewScreen')}>
+        <Button full onPress={() => this.props.navigator.push('NewClassReviewScreen', {classObj: this.props.classObj})}>
           <Text>New Review</Text>
         </Button>
       </Container>
@@ -128,7 +150,7 @@ class ClassScreen extends React.Component {
 
 
 
-  _renderContact(name, email) {
+  _renderContact(name, email, emailContent) {
     return (
       <ListItem icon>
         <Left>
@@ -136,7 +158,7 @@ class ClassScreen extends React.Component {
         </Left>
         <Body>
           <Text>{name}</Text>
-          <Text>{email}</Text>
+          <Text onPress={() => Linking.openURL('mailto://'+email+'?'+emailContent)}>{email}</Text>
         </Body>
       </ListItem>
     )
@@ -144,7 +166,24 @@ class ClassScreen extends React.Component {
 }
 
 ClassScreen.propTypes = {
-  className: PropTypes.string.isRequired,
+  classId: PropTypes.number.isRequired,
+  // className: PropTypes.string.isRequired,
 }
 
-export default ClassScreen
+// export default ClassScreen;
+
+const mapStateToProps = (state, ownProps) => {
+  let classObj = state.classes.classes[ownProps.classId];
+  let tutors = classObj.tutorIds.map((tutorId) => state.users.users[tutorId]);
+
+  return {
+    classObj,
+    tutors,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClassScreen);

@@ -31,7 +31,7 @@ export default createRouter(() => ({
   ViewEventScreen: () => ViewEventScreen,
 
   //Classes
-  classScreen: () => ClassScreen,
+  ClassScreen: () => ClassScreen,
   NewClassReviewScreen: () => NewClassReviewScreen,
 
   //components

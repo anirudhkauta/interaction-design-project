@@ -7,10 +7,25 @@ import {
   View,
   TouchableWithoutFeedback
 } from 'react-native';
-
+import PropTypes from 'prop-types';
 import UIExplorerBlock from './UIExplorerBlock';
 
 class DateTimeInputItem extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+      // date: new Date(),
+    }
+  }
+
+  props : {
+    title?: string
+  }
+  static propTypes = {
+    title: PropTypes.string,
+  };
 
   dateState = {
     spinnerDate: new Date(),
@@ -60,21 +75,21 @@ class DateTimeInputItem extends React.Component {
   render() {
     return (
       <View title="Simple spinner date picker" style={styles.dateTime}>
-        <UIExplorerBlock title="Simple date picker">
-        <TouchableWithoutFeedback onPress={this.showDatePicker.bind(this, 'min', {
-          date: this.dateState.spinnerDate,
-          minDate: this.dateState.minDate,
-          mode: 'spinner'
-        })}>
-          <Text style={styles.text}>{this.dateState.spinnerText}</Text>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={this.showTimePicker.bind(this, 'simple', {
-          hour: this.timeState.presetHour,
-          minute: this.timeState.presetMinute
-        })}>
-          <Text style={styles.text}>{this.timeState.simpleText}</Text>
-        </TouchableWithoutFeedback>
-      </UIExplorerBlock>
+        <UIExplorerBlock title={this.props.title}>
+          <TouchableWithoutFeedback onPress={this.showDatePicker.bind(this, 'min', {
+            date: this.dateState.spinnerDate,
+            minDate: this.props.minimumDate,
+            mode: 'spinner'
+          })}>
+            <Text style={styles.text}>{this.dateState.spinnerText}</Text>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={this.showTimePicker.bind(this, 'simple', {
+            hour: this.timeState.presetHour,
+            minute: this.timeState.presetMinute
+          })}>
+            <Text style={styles.text}>{this.timeState.simpleText}</Text>
+          </TouchableWithoutFeedback>
+        </UIExplorerBlock>
       </View>
     );
   }

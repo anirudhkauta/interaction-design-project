@@ -110,13 +110,13 @@ class ClassScreen extends React.Component {
   }
 
   _renderReviewsTab(tabName) {
-    let reviews = this.props.classObj.reviews.map((review) => {
+    let reviews = this.props.reviews.map((review) => {
       return (
         <ListItem>
           <Body>
             <Item style={{borderWidth:null}}>
-              <Left><Text style={{fontWeight: 'bold'}}>Glorious Leader</Text></Left>
-              <Right><Text note>2/3/4</Text></Right>
+              <Left><Text style={{fontWeight: 'bold'}}>{review.user}</Text></Left>
+              <Right><Text note>{review.semester}</Text></Right>
             </Item>
             <Text>{review.body}</Text>
           </Body>
@@ -175,10 +175,19 @@ ClassScreen.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   let classObj = state.classes.classes[ownProps.classId];
   let tutors = classObj.tutorIds.map((tutorId) => state.users.users[tutorId]);
+  let reviews = state.classes.reviews[classObj.id].map((review) => {
+    // alert(JSON.stringify(review))
+    return {
+      ...review,
+      user: state.users.users[review.userId].name,
+    }
+  });
+  // alert(JSON.stringify(reviews))
 
   return {
     classObj,
     tutors,
+    reviews,
   };
 };
 

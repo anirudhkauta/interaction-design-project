@@ -49,7 +49,7 @@ class NewClassReviewScreen extends React.Component {
   }
 
   onPost() {
-    this.props.onPost(this.props.classObj.id, this.state);
+    this.props.onPost(this.props.classObj.id, this.state.body);
     this.props.navigator.pop();
   }
 }
@@ -66,7 +66,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onPost: (classId, review) => dispatch(classActions.postReview(classId, review)),
+    onPost: (classId, body) => dispatch(classActions.postReview(classId, body)),
   }
 };
 

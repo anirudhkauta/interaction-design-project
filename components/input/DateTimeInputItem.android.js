@@ -1,21 +1,23 @@
 import React from 'react';
 import {
   DatePickerAndroid,
+  TimePickerAndroid,
   StyleSheet,
   Text,
   View,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback
 } from 'react-native';
+
+import UIExplorerBlock from './UIExplorerBlock';
 
 class DateTimeInputItem extends React.Component {
 
-  state = {
+  dateState = {
     spinnerDate: new Date(),
-    spinnerText: 'pick a date',
-    minText: 'pick a date, no earlier than today',
+    spinnerText: 'Pick a Date'
   };
 
-  showPicker = async (stateKey, options) => {
+  showDatePicker = async(stateKey, options) => {
     try {
       var newState = {};
       const {action, year, month, day} = await DatePickerAndroid.open(options);
@@ -32,25 +34,60 @@ class DateTimeInputItem extends React.Component {
     }
   };
 
+  timeState = {
+    presetHour: 4,
+    presetMinute: 4,
+    simpleText: 'pick a time'
+  };
+
+  showTimePicker = async(stateKey, options) => {
+    try {
+      const {action, minute, hour} = await TimePickerAndroid.open(options);
+      var newState = {};
+      if (action === TimePickerAndroid.timeSetAction) {
+        newState[stateKey + 'Text'] = _formatTime(hour, minute);
+        newState[stateKey + 'Hour'] = hour;
+        newState[stateKey + 'Minute'] = minute;
+      } else if (action === TimePickerAndroid.dismissedAction) {
+        newState[stateKey + 'Text'] = _formatTime(presetHour, presetMinute);
+      }
+      this.setState(newState);
+    } catch ({code, message}) {
+      console.warn(`Error in example '${stateKey}': `, message);
+    }
+  };
+
   render() {
     return (
-        <View title="Simple spinner date picker">
-          <TouchableWithoutFeedback
-            onPress={this.showPicker.bind(this, 'min', {
-              date: this.state.spinnerDate,
-              minDate: this.state.minDate,
-              mode: 'spinner'})}>
-            <Text style={styles.text}>{this.state.spinnerText}</Text>
-          </TouchableWithoutFeedback>
-        </View>
+      <View title="Simple spinner date picker" style={styles.dateTime}>
+        <UIExplorerBlock title="Simple date picker">
+        <TouchableWithoutFeedback onPress={this.showDatePicker.bind(this, 'min', {
+          date: this.dateState.spinnerDate,
+          minDate: this.dateState.minDate,
+          mode: 'spinner'
+        })}>
+          <Text style={styles.text}>{this.dateState.spinnerText}</Text>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={this.showTimePicker.bind(this, 'simple', {
+          hour: this.timeState.presetHour,
+          minute: this.timeState.presetMinute
+        })}>
+          <Text style={styles.text}>{this.timeState.simpleText}</Text>
+        </TouchableWithoutFeedback>
+      </UIExplorerBlock>
+      </View>
     );
   }
 }
 
 var styles = StyleSheet.create({
   text: {
-    color: 'black',
+    color: 'black'
   },
+  dateTime: {
+    flex: 1,
+    marginRight: 10
+  }
 });
 
 export default DateTimeInputItem;

@@ -28,7 +28,7 @@ class NewEventScreen extends React.Component {
       /*endTime: calculated before event is created*/
       durationMinutes: 60,
 
-      food: "",
+      description: "",
     }
   }
 
@@ -107,10 +107,10 @@ class NewEventScreen extends React.Component {
 
             <ListItem icon last>
               <Left>
-                {this.renderIconForField(this.state.food.length > 0, 'food', '#FF9501')}
+                {this.renderIconForField(this.state.description.length > 0, 'description', '#FF9501')}
               </Left>
               <Body>
-                <Input placeholder="Food" style={{flex:1}} onChangeText={(text) => this.setState({food: text})} />
+                <Input placeholder="description" style={{flex:1}} onChangeText={(text) => this.setState({description: text})} />
               </Body>
             </ListItem>
           </Form>
@@ -137,8 +137,8 @@ class NewEventScreen extends React.Component {
     }
 
     const OPTION_ORGANIZATION = {
-      option: 'Select Study Group',
-      title: 'Study Group',
+      option: 'Select Organizational Group',
+      title: 'Org Group',
       getSubOptions() {
         const options = [
           'todo get study organization options'
@@ -218,7 +218,7 @@ class NewEventScreen extends React.Component {
 
     return (
       <Button disabled>
-        <Icon name="food" />
+        <Icon name="description" />
       </Button>
     )
   }

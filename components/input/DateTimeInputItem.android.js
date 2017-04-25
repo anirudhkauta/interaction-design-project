@@ -1,80 +1,56 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {
   DatePickerAndroid,
-  TimePickerAndroid,
+  StyleSheet,
+  Text,
   View,
-} from 'react-native'
-import { Container, Title, Content, Item, Input } from 'native-base';
-import { formatDateRaw, formatTime } from '../../api/datetime';
+  TouchableWithoutFeedback,
+} from 'react-native';
 
 class DateTimeInputItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visibleElement: 'none', // 'date' | 'time' | 'none'
-      // date: new Date(),
-    }
-  }
 
+  state = {
+    spinnerDate: new Date(),
+    spinnerText: 'pick a date',
+    minText: 'pick a date, no earlier than today',
+  };
+
+  showPicker = async (stateKey, options) => {
+    try {
+      var newState = {};
+      const {action, year, month, day} = await DatePickerAndroid.open(options);
+      if (action === DatePickerAndroid.dismissedAction) {
+        newState[stateKey + 'Text'] = 'dismissed';
+      } else {
+        var date = new Date(year, month, day);
+        newState[stateKey + 'Text'] = date.toLocaleDateString();
+        newState[stateKey + 'Date'] = date;
+      }
+      this.setState(newState);
+    } catch ({code, message}) {
+      console.warn(`Error in example '${stateKey}': `, message);
+    }
+  };
 
   render() {
-    //Add extra props to input element, keep other children the same.
-    const children = this.props.children.map((child) => {
-      if (child.type == Input) {
-        return (
-          <View style={{flexDirection:'row', flex: 1, marginRight: 10}}>
-            <Input style={{flexGrow: 2}} editable={false} value={formatDateRaw(this.props.value)} onPress={() => this._handleOnFocus()}/>
-            <Input style={{textAlign: 'right'}} editable={false} value={formatTime(this.props.value)} onPress={() => this._handleOnFocus()} />
-          </View>
-        )
-      }
-      return child;
-    });
-
     return (
-      <View>
-        <Item {...this.props}>
-          {children}
-        </Item>
-        {this.renderPicker()}
-      </View>
-    )
+        <View title="Simple spinner date picker">
+          <TouchableWithoutFeedback
+            onPress={this.showPicker.bind(this, 'min', {
+              date: this.state.spinnerDate,
+              minDate: this.state.minDate,
+              mode: 'spinner'})}>
+            <Text style={styles.text}>{this.state.spinnerText}</Text>
+          </TouchableWithoutFeedback>
+        </View>
+    );
   }
-
-  renderPicker() {
-    if (this.state.visibleElement == 'date') {
-      return (
-        <DatePickerAndroid
-          date={this.props.value}
-          onDateChange={(date) => this.props.onDatetimeChange(date)}
-        />
-      )
-    } else if (this.state.visibleElement == 'time') {
-      return (
-        <TimePickerAndroid
-          date={this.props.value}
-          onDateChange={(date) => this.props.onDatetimeChange(date)}
-        />
-      )
-    }
-
-    return null;
-  }
-
-  _handleOnFocus() {
-    this.setState({visible: !this.state.visible});
-  }
-
-  // _handleOnDatetimeChange(date) {
-  //   this.setState({date: date});
-  //   this.props.onDatetimeChange(date);
-  // }
 }
 
-DateTimeInputItem.propTypes = {
-  value: PropTypes.instanceOf(Date),
-  onDatetimeChange: PropTypes.func,
-  minimumDate: PropTypes.instanceOf(Date),//unimplemented TODO
-}
+var styles = StyleSheet.create({
+  text: {
+    color: 'black',
+  },
+});
 
 export default DateTimeInputItem;

@@ -181,9 +181,9 @@ class EventsScreen extends React.Component {
   // }
 }
 
-EventsScreen.propTypes = {
-  onCreateEvent: PropTypes.func.isRequired,
-}
+// EventsScreen.propTypes = {
+//   onCreateEvent: PropTypes.func.isRequired,
+// }
 
 const mapStateToProps = state => {
   // alert(state.events.events);

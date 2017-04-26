@@ -22,6 +22,7 @@ class NewEventScreen extends React.Component {
     this.state = {
       locationFieldAnim: new Animated.Value(1),
       title: "",
+      description: "",
       location: "",
 
       startTime: initialStartTime,
@@ -78,6 +79,9 @@ class NewEventScreen extends React.Component {
 
             <Item>
               <Input autoFocus placeholder="Name" onChangeText={(text) => this.setState({title: text})} />
+            </Item>
+            <Item>
+              <Input placeholder="Description" onChangeText={(text) => this.setState({description: text})} />
             </Item>
             <Item last onLayout={(event) => this.setState({locationFieldY: event.nativeEvent.layout.y})}>
               <Icon name="compass" />

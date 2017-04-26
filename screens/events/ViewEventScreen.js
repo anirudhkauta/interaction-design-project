@@ -35,53 +35,53 @@ class ViewEventScreen extends React.Component {
         </Header>
 
         <Content>
-          <ListItem icon>
+          <Item icon>
             <Left>
               <Button transparent>
                 <Icon name="calender" />
               </Button>
             </Left>
             <Body>
-              <Text>time</Text>
+              <Text>{event.title}</Text>
             </Body>
-          </ListItem>
+          </Item>
 
-          <ListItem icon>
+          <Item icon>
             <Left>
               <Button transparent>
                 <Icon name="compass" />
               </Button>
             </Left>
             <Body>
-              <Text>location</Text>
+              <Text>{event.location}</Text>
             </Body>
-          </ListItem>
+          </Item>
 
           <View style={{height:200}}>
             <Map />
           </View>
 
-          <ListItem icon>
+          <Item icon>
             <Left>
               <Button transparent>
                 <Icon name="note" />
               </Button>
             </Left>
             <Body>
-              <Text>description</Text>
+              <Text>{event.description}</Text>
             </Body>
-          </ListItem>
+          </Item>
 
-          <ListItem icon>
+          <Item icon>
             <Left>
               <Button transparent>
                 <Icon name="food" />
               </Button>
             </Left>
             <Body>
-              <Text>food</Text>
+              <Text>{event.food}</Text>
             </Body>
-          </ListItem>
+          </Item>
 
         </Content>
 

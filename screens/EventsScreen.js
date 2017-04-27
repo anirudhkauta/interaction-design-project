@@ -17,7 +17,7 @@ class EventsScreen extends React.Component {
   render() {
     return (
       <Container>
-        <HeaderWithSearchIcon hasTabs red style={{backgroundColor:'#8A2BE2'}}>
+        <HeaderWithSearchIcon hasTabs>
           <Left>
             <Button transparent onPress={() => this.props.navigator.pop()}>
               <Icon name='arrow-back' />
@@ -34,14 +34,14 @@ class EventsScreen extends React.Component {
         </HeaderWithSearchIcon>
 
         <Tabs>
-          <Tab heading="My Events">
-            {this._renderEventsTab()}
+          <Tab heading="Calendar">
+            {this._renderCalenderTab()}
           </Tab>
           <Tab heading="Groups">
             {this._renderGroupsTab()}
           </Tab>
-          <Tab heading="Calendar">
-            {this._renderCalenderTab()}
+          <Tab heading="My Events">
+            {this._renderEventsTab()}
           </Tab>
         </Tabs>
       </Container>
@@ -117,7 +117,6 @@ class EventsScreen extends React.Component {
   }
 
   _renderEvent(event) {
-
     return (
       <ListItem avatar last onPress={() => this.props.navigator.push('ViewEventScreen', {event})}>
         <Left>

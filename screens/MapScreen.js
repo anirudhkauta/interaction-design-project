@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   Image,
   Platform,
@@ -7,7 +7,7 @@ import { View, Container, Header, Title, Content, ListItem, Left, Button, Fab, B
 
 import Map from '../components/Map'
 
-export default class MapScreen extends React.Component {
+class MapScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,7 +55,7 @@ export default class MapScreen extends React.Component {
             </Button>
           </View>
           <View style={{position:'absolute',left:0,top:0,right:0,bottom:0}}>
-            <Map />
+            <Map initialMarker={this.props.initialMarker} navigator={this.props.navigator} />
           </View>
         </View>
 
@@ -73,7 +73,7 @@ export default class MapScreen extends React.Component {
               {this.renderFabFilterButtonRow('#FFF', '#5cb85c', 'icon', '_', 'filter3')}
               {this.renderFabFilterButtonRow('#FFF', '#62B1F6', 'icon', '_', 'filter4')}
               {this.renderFabFilterButtonRow('#FF9501', 'rgba(255,255,255,.9)', 'food', 'Food', 'filter5')}
-              {this.renderFabButtonRow('#FFF', '#2874F0', 'add', 'New Event', false, () => {this.props.navigator.push('newEvent')})}
+              {this.renderFabButtonRow('#FFF', '#2874F0', 'add', 'New Evnt', false, () => {this.props.navigator.push('newEvent')})}
           </Fab>
       </View>
       </Container>
@@ -104,7 +104,7 @@ export default class MapScreen extends React.Component {
         onPress={onPress}
       >
         {this.renderFabButton(outlineColor, fillColor, icon, onPress)}
-        <Text style={{color:null, flexGrow:1, marginLeft:10}}>{text}</Text>
+        <Text numberOfLines={2} style={{color:null, flexGrow:1, marginLeft:10}}>{text}</Text>
       </View>
     )
   }
@@ -137,3 +137,9 @@ export default class MapScreen extends React.Component {
     )
   }
 }
+
+MapScreen.propTypes = {
+  initialMarker: PropTypes.element,
+}
+
+export default MapScreen;
